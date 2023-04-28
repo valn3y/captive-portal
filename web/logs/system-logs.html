@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, minimal-ui">
+    <title>ESP PORTAL</title>
+    <link rel="stylesheet" href="../styles/milligram.min.css">
+    <link rel="stylesheet" href="milligram.min.css">
+
+    <link rel="stylesheet" href="../styles/normalize.min.css">
+    <link rel="stylesheet" href="normalize.min.css">
+
+    <link rel="stylesheet" href="../index.css">
+    <link rel="stylesheet" href="index.css">
+
+    <script src="../utils/jquery.slim.min.js"></script>
+    <script src="jquery.slim.min.js"></script>
+
+    <script src="../index.js"></script>
+    <script src="index.js"></script>
+  </head>
+  <body>
+    <main class="wrapper">
+      <nav class="navigation">
+        <section class="container">
+          <div class="navigation-title"><a href="/esp-portal" class="button">Home</a></div>
+          <div class="float-right navigation-title">ESP PORTAL</div>
+        </section>
+      </nav>
+      <section class="container">
+        <div class="row">
+          <div class="column">
+            <h1 id="titleh1"> </h1>
+            <pre><code id="logPrint" class="code-content"></code></pre><a href="/download-system-logs" class="button">Download logs</a> <a href="/clean-system-logs" class="button button-outline">Wipe logs</a>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
+<script>
+  function loadJson(){
+    getFile("/log",function(res){
+        var log = res;
+        printLog(log);
+    });
+  
+  }
+  
+  function printLog(log){
+    if (log == "") {
+      $("#logPrint").append('LOGS ARE EMPTY')
+    }
+    else {
+    
+      var lines = log.split('\n');
+      var arrayLength = lines.length;
+              
+      
+      for (var i = 0; i < arrayLength; i++) {
+          console.log(lines[i]);
+          $("#logPrint").append('<span>' + lines[i] + '</span>')
+  
+      }
+    }
+  }
+  
+  
+  
+</script>
+<script>
+  $(document).ready(function() {
+    var pathname = window.location.pathname;
+    if(pathname == "error"){
+      $('#titleh1').text("Something went wrong");
+    } else{
+      $('#titleh1').text("System logs");
+    }
+    
+    loadJson();
+        
+  });
+  
+            
+            
+</script>
